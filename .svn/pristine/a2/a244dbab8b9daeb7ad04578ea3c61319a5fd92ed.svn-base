@@ -1,0 +1,130 @@
+<template>
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12">
+        <b-card>
+          <div slot="header">
+            <strong>{{ title }}</strong>
+          </div>
+
+          <b-form @submit.prevent="submit" @keydown="form.onKeydown($event)">
+            <!--start: timestamp_start|timestamp_end -->
+            <div class="row">
+              <!--start: timestamp_start -->
+              <div class="col-md-6">
+                <!--start: timestamp_start -->
+                <b-form-fieldset
+                  label="Date & Time From"
+                  description="Please enter date & time from.">
+                  <date-picker v-model="form.timestamp_start" :config="config"/>
+                </b-form-fieldset>
+                <!--end: timestamp_start -->
+              </div>
+              <!--end: timestamp_start -->
+
+              <!--start: timestamp_end -->
+              <div class="col-md-6">
+                <!--start: timestamp_end -->
+                <b-form-fieldset
+                  label="Date & Time To"
+                  description="Please enter date & time to.">
+                  <date-picker v-model="form.timestamp_end" :config="config"/>
+                </b-form-fieldset>
+                <!--end: timestamp_end -->
+              </div>
+              <!--end: timestamp_end -->
+            </div>
+            <!--end: timestamp_start|timestamp_end -->
+
+            <alert-errors :form="form" message="There were some problems with your input."/>
+
+            <!-- start: footer buttons -->
+            <div slot="footer">
+              <b-button :disabled="form.busy" type="submit" size="sm" variant="primary"><i class="fa fa-dot-circle-o"/> {{ submitLabel }}
+              </b-button>
+              <b-button type="reset" size="sm" variant="danger" @click="$router.go(-1)"><i class="fa fa-ban"/> Cancel</b-button>
+            </div>
+            <!-- end: footer buttons -->
+
+          </b-form>
+        </b-card>
+      </div><!--/.col-->
+    </div><!--/.row-->
+
+  </div>
+
+</template>
+
+<script>
+import Form from 'vform'
+import datePicker from 'vue-bootstrap-datetimepicker'
+import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
+
+export default {
+  name: 'Forms',
+  components: {
+    datePicker
+  },
+  data: function () {
+    return {
+      form: new Form({
+        timestamp_start: '',
+        timestamp_end: ''
+      }),
+      config: {
+        format: 'YYYY-MM-DD hh:mm A',
+        sideBySide: true,
+        icons: {
+          next: 'fa fa-arrow-right',
+          previous: 'fa fa-arrow-left',
+          up: 'fa fa-arrow-up',
+          down: 'fa fa-arrow-down'
+        }
+      },
+      title: '',
+      submitLabel: '',
+      eventId: '',
+      id: ''
+    }
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+  created () {
+    this.fetchData()
+  },
+  mounted: function () {
+    this.title = typeof (this.$route.params.id) === 'undefined' ? 'Create New Event Date & Time' : 'Update Event Date & Time'
+    this.submitLabel = typeof (this.$route.params.id) === 'undefined' ? 'Create' : 'Update'
+  },
+  methods: {
+    submit: async function () {
+      const {data} = typeof (this.id) === 'undefined'
+        ? await this.form.post(this.$apiUrl + `organizer/event/${this.eventId}/date-time/create`)
+        : await this.form.put(this.$apiUrl + `organizer/event/${this.eventId}/date-time/${this.id}/update`)
+
+      this.$swal.success(data.message)
+      if (typeof (this.id) === 'undefined') {
+        this.form.reset()
+      }
+    },
+    /**
+       * Fetches the data for edit
+       */
+    fetchData () {
+      var component = this
+      this.eventId = this.$route.params.event_id
+      this.id = this.$route.params.id
+      if (typeof (this.id) === 'undefined') return false
+
+      axios.get(this.$apiUrl + `organizer/event/${this.eventId}/date-time/${this.id}/edit`)
+        .then(function (response) {
+          component.form.fill({
+            'timestamp_start': response.data.timestamp_start,
+            'timestamp_end': response.data.timestamp_end
+          })
+        })
+    }
+  }
+}
+</script>
