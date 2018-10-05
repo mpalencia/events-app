@@ -13,7 +13,7 @@ class CreateEventsSchema extends Migration
      */
     public function up()
     {
-        DB::statement('CREATE SCHEMA event');
+        //DB::statement('CREATE SCHEMA event');
     }
 
     /**
@@ -23,6 +23,6 @@ class CreateEventsSchema extends Migration
      */
     public function down()
     {
-        DB::statement('DROP SCHEMA event');
+        //DB::statement('DROP SCHEMA event');
     }
 }

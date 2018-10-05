@@ -13,7 +13,7 @@ class CreateBookmarksTable extends Migration
      */
     public function up()
     {
-        Schema::create('event.bookmarks', function (Blueprint $table) {
+        Schema::create('bookmarks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('event_id')->unsigned();
@@ -21,12 +21,12 @@ class CreateBookmarksTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users.users')
+                ->on('users')
                 ->onDelete('cascade');
 
             $table->foreign('event_id')
                 ->references('id')
-                ->on('event.events')
+                ->on('events')
                 ->onDelete('cascade');
 
             $table->unique(['user_id', 'event_id']);
@@ -40,6 +40,6 @@ class CreateBookmarksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event.bookmarks');
+        Schema::dropIfExists('bookmarks');
     }
 }

@@ -13,10 +13,11 @@ class CreateOrganizerTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizer.organizers', function (Blueprint $table) {
+        Schema::create('organizers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 150);
-            $table->string('email')->unique();
+            //$table->string('email')->unique();
+            $table->string('email', 75)->unique();
             $table->text('description');
             $table->text('address');
             $table->string('contact', 30);
@@ -34,6 +35,6 @@ class CreateOrganizerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organizer.organizers');
+        Schema::dropIfExists('organizers');
     }
 }

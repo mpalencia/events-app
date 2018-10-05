@@ -13,7 +13,7 @@ class CreateEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('event.events', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('organizer_id')->unsigned();
             $table->string('name', 150);
@@ -26,7 +26,7 @@ class CreateEventsTable extends Migration
 
             $table->foreign('organizer_id')
                 ->references('id')
-                ->on('organizer.organizers')
+                ->on('organizers')
                 ->onDelete('cascade');
         });
     }
@@ -38,6 +38,6 @@ class CreateEventsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event.events');
+        Schema::dropIfExists('events');
     }
 }

@@ -13,7 +13,7 @@ class CreateUserInterestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('users.user_interests', function (Blueprint $table) {
+        Schema::create('user_interests', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('tag_id')->unsigned();
@@ -21,7 +21,7 @@ class CreateUserInterestsTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users.users')
+                ->on('users')
                 ->onDelete('cascade');
 
             $table->foreign('tag_id')
@@ -40,6 +40,6 @@ class CreateUserInterestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users.user_interests');
+        Schema::dropIfExists('user_interests');
     }
 }

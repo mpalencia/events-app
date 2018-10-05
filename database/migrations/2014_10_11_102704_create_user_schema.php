@@ -13,7 +13,7 @@ class CreateUserSchema extends Migration
      */
     public function up()
     {
-        DB::statement('CREATE SCHEMA users');
+        //DB::statement('CREATE SCHEMA users');
     }
 
     /**
@@ -23,6 +23,6 @@ class CreateUserSchema extends Migration
      */
     public function down()
     {
-        DB::statement('DROP SCHEMA users');
+        //DB::statement('DROP SCHEMA users');
     }
 }

@@ -13,7 +13,7 @@ class CreateEventTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('event.event_tags', function (Blueprint $table) {
+        Schema::create('event_tags', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('event_id')->unsigned()->comment('Event FK');
             $table->integer('tag_id')->unsigned()->comment('Tag FK');
@@ -21,7 +21,7 @@ class CreateEventTagsTable extends Migration
 
             $table->foreign('event_id')
                 ->references('id')
-                ->on('event.events')
+                ->on('events')
                 ->onDelete('cascade');
 
             $table->foreign('tag_id')

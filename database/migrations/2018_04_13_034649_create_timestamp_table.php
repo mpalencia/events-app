@@ -13,17 +13,17 @@ class CreateTimestampTable extends Migration
      */
     public function up()
     {
-        Schema::create('event.timestamps', function (Blueprint $table) {
+        Schema::create('timestamps', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('event_id')->unsigned();
             $table->timestamp('timestamp_start');
-            $table->timestamp('timestamp_end');
+            $table->timestamp('timestamp_end')->nullable();
             $table->timestamps();
 
 
             $table->foreign('event_id')
                 ->references('id')
-                ->on('event.events')
+                ->on('events')
                 ->onDelete('cascade');
         });
     }
@@ -35,6 +35,6 @@ class CreateTimestampTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event.timestamps');
+        Schema::dropIfExists('timestamps');
     }
 }

@@ -13,7 +13,7 @@ class CreateOrganizerSchema extends Migration
      */
     public function up()
     {
-        DB::statement('CREATE SCHEMA organizer');
+        //DB::statement('CREATE SCHEMA organizer');
     }
 
     /**
@@ -23,6 +23,6 @@ class CreateOrganizerSchema extends Migration
      */
     public function down()
     {
-        DB::statement('DROP SCHEMA organizer');
+        //DB::statement('DROP SCHEMA organizer');
     }
 }

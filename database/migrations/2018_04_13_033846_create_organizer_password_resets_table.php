@@ -13,8 +13,9 @@ class CreateOrganizerPasswordResetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizer.organizer_password_resets', function (Blueprint $table) {
-            $table->string('email')->index();
+        Schema::create('organizer_password_resets', function (Blueprint $table) {
+            //$table->string('email')->index();
+            $table->string('email', 75)->unique();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
@@ -27,6 +28,6 @@ class CreateOrganizerPasswordResetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organizer.organizer_password_resets');
+        Schema::dropIfExists('organizer_password_resets');
     }
 }

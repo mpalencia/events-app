@@ -13,7 +13,7 @@ class CreateLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('event.locations', function (Blueprint $table) {
+        Schema::create('locations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('event_id')->unsigned();
             $table->string('name', 150);
@@ -24,7 +24,7 @@ class CreateLocationsTable extends Migration
 
             $table->foreign('event_id')
                 ->references('id')
-                ->on('event.events')
+                ->on('events')
                 ->onDelete('cascade');
         });
     }
@@ -36,6 +36,6 @@ class CreateLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event.locations');
+        Schema::dropIfExists('locations');
     }
 }

@@ -13,7 +13,7 @@ class CreateOrganizerTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizer.organizer_tags', function (Blueprint $table) {
+        Schema::create('organizer_tags', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('organizer_id')->unsigned();
             $table->integer('tag_id')->unsigned();
@@ -21,7 +21,7 @@ class CreateOrganizerTagsTable extends Migration
 
             $table->foreign('organizer_id')
                 ->references('id')
-                ->on('organizer.organizers')
+                ->on('organizers')
                 ->onDelete('cascade');
 
             $table->foreign('tag_id')
@@ -40,6 +40,6 @@ class CreateOrganizerTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organizer.organizer_tags');
+        Schema::dropIfExists('organizer_tags');
     }
 }
